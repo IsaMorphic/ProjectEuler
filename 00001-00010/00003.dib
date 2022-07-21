@@ -1,0 +1,36 @@
+#!markdown
+
+## Challenge #3
+
+#!markdown
+
+The prime factors of 13195 are 5, 7, 13 and 29.
+
+What is the largest prime factor of the number 600851475143 ?
+
+#!fsharp
+
+let sqrtInt64 = float >> sqrt >> round >> int64
+
+let isPrime n =
+    let rec check i =
+        i > sqrtInt64 n || (n % i <> 0L && check (i + 1L))
+    check 2
+
+let rec divCount k n = 
+    if n % k = 0L then (n / k |> divCount k) + 1L
+    else 0L
+
+let naturals = Seq.initInfinite (int64 >> ((+) 1L))
+let primes = 
+    naturals |> 
+    Seq.skip 1 |> 
+    Seq.filter isPrime
+
+let factors n = 
+    primes |> 
+    Seq.takeWhile (fun p -> p < sqrtInt64 n) |> 
+    Seq.filter (fun p -> n % p = 0L) |> 
+    Seq.map (fun p -> p, n |> divCount p)
+
+factors 600851475143L
