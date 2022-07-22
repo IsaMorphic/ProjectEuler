@@ -1,0 +1,23 @@
+#!markdown
+
+## Challenge #4
+
+#!markdown
+
+A palindromic number reads the same both ways. The largest palindrome made from the product of two 2-digit numbers is 9009 = 91 × 99.
+
+Find the largest palindrome made from the product of two 3-digit numbers.
+
+#!fsharp
+
+let isPalindrome (n: int64) = 
+    let forward = n |> string
+    let backward = forward |> Seq.rev |> String.Concat
+    forward = backward
+
+let threeDigits = { 100L .. 999L }
+threeDigits |> 
+Seq.collect (fun n -> (threeDigits |> Seq.map (( * ) n))) |>
+Seq.filter (fun p -> isPalindrome p) |>
+Seq.map int64 |>
+Seq.max
