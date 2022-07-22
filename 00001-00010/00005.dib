@@ -1,0 +1,21 @@
+#!markdown
+
+## Challenge #5
+
+#!markdown
+
+2520 is the smallest number that can be divided by each of the numbers from 1 to 10 without any remainder.
+
+What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20?
+
+#!fsharp
+
+let checkNumber n = 
+    seq { 
+        for x in 1L..20L do
+            yield n % x
+    } |> 
+    Seq.exists ((<>) 0L) |> 
+    not
+
+{ 1L..Int64.MaxValue } |> Seq.find checkNumber
