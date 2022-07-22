@@ -1,0 +1,19 @@
+#!markdown
+
+## Challenge #6
+
+#!markdown
+
+Sum of squares minus square of sums for 1 to 100
+
+#!fsharp
+
+let square n = n * n
+let sum a b = a + b
+
+let oneTo100 = { 1L..100L }
+
+let sumOfSquares = oneTo100 |> Seq.map square |> Seq.sum
+let squareOfSums = oneTo100 |> Seq.sum |> square
+
+squareOfSums - sumOfSquares

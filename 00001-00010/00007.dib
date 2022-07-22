@@ -1,0 +1,25 @@
+#!markdown
+
+## Challenge #7
+
+#!markdown
+
+By listing the first six prime numbers: 2, 3, 5, 7, 11, and 13, we can see that the 6th prime is 13.
+
+What is the 10 001st prime number?
+
+#!fsharp
+
+let sqrtInt64 = float >> sqrt >> round >> int64
+
+let isPrime n =
+    let rec check i =
+        i > sqrtInt64 n || (n % i <> 0L && check (i + 1L))
+    check 2
+let naturals = Seq.initInfinite (int64 >> ((+) 1L))
+let primes = 
+    naturals |> 
+    Seq.skip 1 |> 
+    Seq.filter isPrime
+
+primes |> Seq.skip 10_000 |> Seq.head
