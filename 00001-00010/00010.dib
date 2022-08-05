@@ -1,0 +1,23 @@
+#!markdown
+
+## Challenge #10
+
+The sum of the primes below 10 is 2 + 3 + 5 + 7 = 17.
+
+Find the sum of all the primes below two million.
+
+#!fsharp
+
+let sqrtInt64 = float >> sqrt >> round >> int64
+
+let isPrime n =
+    let rec check i =
+        i > sqrtInt64 n || (n % i <> 0L && check (i + 1L))
+    check 2
+let naturals = Seq.initInfinite (int64 >> ((+) 1L))
+let primes = 
+    naturals |> 
+    Seq.skip 1 |> 
+    Seq.filter isPrime
+
+primes |> Seq.takeWhile (fun n -> n < 2_000_000L) |> Seq.sum
